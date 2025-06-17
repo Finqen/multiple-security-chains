@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: securitychains
+  security:
+    user:
+      name: technical_user
+      password: bn123
+      roles: admin
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key: |
+            -----BEGIN PUBLIC KEY-----
+            MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA40fachoQL8Oe9w1IMVJn
+            CuecpPGPvQwVygD7iiluZJJZdvBWCSwqt7Td17B3YuTajHxfphuYqv4/xsnmErxv
+            TBUOZGlWO9XQtV5QlG9kc23+wkqURa37IjlALo3CZH0gv+NWACIZnJeMwOhdPogR
+            f25ytRnSk/DJ0PBrPYcjCsZXaeHoRpRz7HRI78Kay2cCKFrf9suWSVM0X2oVHm5B
+            Tk51dJ/UpcQl7aMgRbYF7LNPmkjS94mLg4LA78WPU/kbXGnKnbGuau3g6uMqNlwY
+            fJFsGWu14HkmLK1y+BMGQvFVrh+oLpynE5XTcYjgPL4vJRDEFPRFSAC4QCAHnP47
+            VQIDAQAB
+            -----END PUBLIC KEY-----
