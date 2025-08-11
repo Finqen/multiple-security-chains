@@ -5,7 +5,7 @@ spring:
     user:
       name: technical_user
       password: bn123
-      roles: admin
+      roles: admin, internal
     oauth2:
       resourceserver:
         jwt:
@@ -19,3 +19,7 @@ spring:
             fJFsGWu14HkmLK1y+BMGQvFVrh+oLpynE5XTcYjgPL4vJRDEFPRFSAC4QCAHnP47
             VQIDAQAB
             -----END PUBLIC KEY-----
+
+logging:
+  level:
+    root: INFO

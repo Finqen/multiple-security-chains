@@ -5,6 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 @RequestMapping(path = {"/internal"})
 public class InternalEndpoint {
 
-    @GetMapping(value = "/token", produces = MediaType.TEXT_PLAIN_VALUE)
+    @GetMapping(value = "/user/token", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> getInternalToken() {
         return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).body("TOKEN123");
     }

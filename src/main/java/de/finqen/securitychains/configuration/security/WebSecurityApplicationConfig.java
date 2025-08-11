@@ -6,17 +6,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.security.interfaces.RSAPublicKey;
@@ -25,6 +27,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true)
@@ -32,6 +36,17 @@ public class WebSecurityApplicationConfig {
 
     @Value("${spring.security.oauth2.resourceserver.jwt.public-key}")
     RSAPublicKey key;
+
+    @Value("${spring.security.user.name}")
+    String username;
+
+    @Value("${spring.security.user.password}")
+    String password;
+
+    @Value("${spring.security.user.roles}")
+    String[] roles;
+
+    private String ENCODING = "{noop}";
 
     @Bean
     @Order(1)
@@ -42,7 +57,7 @@ public class WebSecurityApplicationConfig {
                     authorizeRequests.requestMatchers("/api/**").denyAll();
                     authorizeRequests.anyRequest().authenticated();
                 })
-                .httpBasic(Customizer.withDefaults())
+                .httpBasic(withDefaults())
                 .build();
     }
 
@@ -87,4 +102,14 @@ public class WebSecurityApplicationConfig {
         return NimbusJwtDecoder.withPublicKey(this.key).build();
     }
 
+    @Bean
+    public UserDetailsService users() {
+        var tecUser = User
+                .withUsername(username)
+                .password("{noop}bn123")
+                .roles(roles)
+                .build();
+
+        return new InMemoryUserDetailsManager(tecUser);
+    }
 }
